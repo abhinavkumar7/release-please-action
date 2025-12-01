@@ -1,3 +1,5 @@
+name: Automated Tagging (release-please)
+
 on:
   push:
     branches:
@@ -5,18 +7,16 @@ on:
 
 permissions:
   contents: write
-  issues: write
-  pull-requests: write
-
-name: release-please
-
 
 jobs:
-  release-please:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          skip-github-release: true
+          command: manifest   # IMPORTANT: run manifest mode directly
           release-type: simple
+          skip-github-release: true   # no Release object
+          bump-minor-pre-major: true  # optional
+          bump-patch-for-minor-pre-major: true
